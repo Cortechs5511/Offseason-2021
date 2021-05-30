@@ -13,8 +13,9 @@ public class OI {
     private final Joystick rightStick = new Joystick(1);
     private final XboxController controller = new XboxController(2);
 
+    public Supplier<Double> getLeftX = leftStick::getX;
     public Supplier<Double> getLeftY = leftStick::getY;
-    public Supplier<Double> getRightY = rightStick::getY;
+    public Supplier<Double> getRightX = rightStick::getX;
 
     public Supplier<Boolean> getWristUp = () -> Math.abs(controller.getRawAxis(2)) > 0.5;
     public Supplier<Boolean> getWristDown = () -> Math.abs(controller.getRawAxis(3)) > 0.5;
