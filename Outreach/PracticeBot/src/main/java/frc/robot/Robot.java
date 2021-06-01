@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -14,7 +15,8 @@ public class Robot extends TimedRobot {
     public CANSparkMax right0 = createSparkMAX(20, false);
 
     public DifferentialDrive drive = new DifferentialDrive(left0, right0);
-    public XboxController controller = new XboxController(2);
+    public Joystick leftStick = new Joystick(0);
+    public Joystick rightStick = new Joystick(1);
 
     public Lighting lights = new Lighting();
 
@@ -44,7 +46,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-        double power = controller.getRawAxis(1), steer = -controller.getRawAxis(4);
+        double power = leftStick.getY(), steer = -rightStick.getX();
         drive.arcadeDrive(power * 0.6, steer, true);
         lights.drive(power, steer);
     }
