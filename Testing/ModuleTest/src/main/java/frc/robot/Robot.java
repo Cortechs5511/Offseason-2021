@@ -24,8 +24,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
     XboxController controller = new XboxController(1);
 
-    private CANSparkMax drive = createSparkMAX(10, false);
-    private CANSparkMax steer = createSparkMAX(11, false);
+    private CANSparkMax drive = createSparkMAX(20, false);
+    private CANSparkMax steer = createSparkMAX(21, false);
 
     private DutyCycleEncoder angleEncoder = new DutyCycleEncoder(0);
     private Encoder wheelEncoder = new Encoder(1, 2);
@@ -82,8 +82,8 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
-        double driveAxis = controller.getRawAxis(2);
-        double steerAxis = controller.getRawAxis(3);
+        double driveAxis = controller.getRawAxis(1);
+        double steerAxis = controller.getRawAxis(4);
 
         if (Math.abs(driveAxis) >= 0.25) {
             drive.set(driveAxis * 0.3);
