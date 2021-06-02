@@ -67,8 +67,6 @@ public class SwerveModule {
     }
 
     public void setState(SwerveModuleState moduleState) {
-        //do stuff here
-        //remember to do the optimization
         var optimized = SwerveModuleState.optimize(moduleState, getAngle());
         spinControl.setSetpoint(optimized.angle.getDegrees());
         wheelControl.setSetpoint(moduleState.speedMetersPerSecond);

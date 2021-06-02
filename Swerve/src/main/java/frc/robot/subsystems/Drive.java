@@ -4,17 +4,11 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
-import java.util.function.Supplier;
 
 public class Drive extends SubsystemBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -46,10 +40,10 @@ public class Drive extends SubsystemBase {
     public Drive() {
         double x = DriveConstants.kDTWidth / 2;
         double y = DriveConstants.kDTLength / 2;
-        module0 = new SwerveModule(DriveConstants.kSpin0Port, DriveConstants.kWheel0Port, -x, y, 0, 0);
-        module1 = new SwerveModule(DriveConstants.kSpin1Port, DriveConstants.kWheel1Port, x, y, 1, 2);
-        module2 = new SwerveModule(DriveConstants.kSpin2Port, DriveConstants.kWheel2Port, x, -y, 2, 4);
-        module3 = new SwerveModule(DriveConstants.kSpin3Port, DriveConstants.kWheel3Port, -x, -y, 3, 6);
+        module0 = new SwerveModule(DriveConstants.kSpin0Port, DriveConstants.kWheel0Port, -x, y, 0, 1);
+        module1 = new SwerveModule(DriveConstants.kSpin1Port, DriveConstants.kWheel1Port, x, y, 3, 4);
+        module2 = new SwerveModule(DriveConstants.kSpin2Port, DriveConstants.kWheel2Port, x, -y, 6, 7);
+        module3 = new SwerveModule(DriveConstants.kSpin3Port, DriveConstants.kWheel3Port, -x, -y, 9, 10);
 
         /*CANSparkMax left1 = createSparkMAX(DriveConstants.kLeftMotor1Port, false);
         CANSparkMax right1 = createSparkMAX(DriveConstants.kRightMotor1Port, true);*/
@@ -76,6 +70,14 @@ public class Drive extends SubsystemBase {
 
     public void setMaxOutput(double maxOutput) {
         this.maxOutput = maxOutput;
+    }
+
+
+    public void setModuleStates(SwerveModuleState[] moduleState) {
+        module0.setState(moduleState[0]);
+        module1.setState(moduleState[1]);
+        module2.setState(moduleState[2]);
+        module3.setState(moduleState[3]);
     }
 
     @Override
