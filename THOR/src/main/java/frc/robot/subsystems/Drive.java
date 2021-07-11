@@ -95,7 +95,7 @@ public class Drive extends SubsystemBase {
     public Pose2d getPose() {
         return m_odometry.getPoseMeters();
     }
-
+    
     public void setOutput(double leftVolts, double rightVolts) {
         left0.set(rightVolts / MAX_ALLOWED_VOLTS);
         right0.set(leftVolts / MAX_ALLOWED_VOLTS);

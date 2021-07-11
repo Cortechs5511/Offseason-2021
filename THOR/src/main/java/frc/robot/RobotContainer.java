@@ -12,6 +12,7 @@ import frc.robot.commands.SetIntakePower;
 import frc.robot.commands.SetSpeed;
 import frc.robot.commands.shooter.ShootAlign;
 import frc.robot.commands.shooter.StopShooter;
+import frc.robot.commands.TrajectoryFollower;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Feeder;
@@ -100,20 +101,20 @@ public class RobotContainer {
         
         switch (selection) {
             case TowerReverse:
-                pathCommand = TrajectoryFollower.getPath("output/TowerReverse.wpilib.json", m_drive, true).andThen(stop());
+                pathCommand = TrajectoryFollower.getPath("output/TowerReverse.wpilib.json", m_drive, true);
                 break;
             case TowerForwards:
-                pathCommand = TrajectoryFollower.getPath("output/TowerForwards.wpilib.json", m_drive, true).andThen(stop());
+                pathCommand = TrajectoryFollower.getPath("output/TowerForwards.wpilib.json", m_drive, true);
                 break;
             case Trench:
-                pathCommand = TrajectoryFollower.getPath("output/Trench.wpilib.json", m_drive, true).andThen(stop());
+                pathCommand = TrajectoryFollower.getPath("output/Trench.wpilib.json", m_drive, true);
                 break;
             case Generator:
-                pathCommand = TrajectoryFollower.getPath("output/Generator.wpilib.json", m_drive, true).andThen(stop());
+                pathCommand = TrajectoryFollower.getPath("output/Generator.wpilib.json", m_drive, true);
                 break;
             default:
                 pathCommand = new WaitCommand(1.0);
         }
-        return new WaitCommand(1.0);
+        return m_shootAlignSlow.andThen(pathCommand);
     }
 }
