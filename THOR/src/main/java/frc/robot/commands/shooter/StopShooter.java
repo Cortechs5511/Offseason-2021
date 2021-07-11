@@ -37,8 +37,7 @@ public class StopShooter extends CommandBase {
 
         m_drive.set(0, 0);
 
-        m_oi.setLeftRumble(1); // rumble to 1 to try to prevent stuck motor input
-        m_oi.setRightRumble(1);
+        m_oi.setRumble(1); // rumble to 1 to try to prevent stuck motor input
 
         m_limelight.setLightStatus(1);
     }
@@ -53,8 +52,7 @@ public class StopShooter extends CommandBase {
         m_shooter.setPIDReference(0);
         m_shooter.setOutput(0);
 
-        m_oi.setLeftRumble(0);
-        m_oi.setRightRumble(0);
+        m_oi.setRumble(0);
     }
 
     @Override

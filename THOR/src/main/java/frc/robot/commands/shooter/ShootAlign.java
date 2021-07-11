@@ -10,9 +10,9 @@ public class ShootAlign extends SequentialCommandGroup {
     public ShootAlign(Double limeThreshold, int feedThreshold, Drive drive, Shooter shooter, Feeder feeder, Limelight limelight, Intake intake) {
         addCommands(
                 new LightOn(limelight),
-                new WaitCommand(0.5),
+                new WaitCommand(0.2),
                 new AccelAlign(limeThreshold, drive, limelight, shooter),
-                new WaitCommand(0.5),
+                new WaitCommand(0.2),
                 new Cruise(feedThreshold, shooter, feeder, limelight, intake));
     }
 }

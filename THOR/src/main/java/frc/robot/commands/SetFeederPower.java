@@ -16,7 +16,6 @@ public class SetFeederPower extends CommandBase {
 
 	@Override
 	public void initialize() {
-		m_feeder.resetFeedEncoder();
 	}
 
 	@Override
@@ -39,32 +38,32 @@ public class SetFeederPower extends CommandBase {
 		}
 
 		double polySpeed;
-		if (top && bottom && black && green) { // 1111
-			polySpeed = 0; // poly off
-			blackSpeed = 0; // black off
-			greenSpeed = 0; // green off
-		} else if (top && bottom && black) { // 1110
-			polySpeed = 0; // poly off
-			blackSpeed = 0; // black off, green on intake
-		} else if (top && bottom && green) { // 110*
-			polySpeed = 0; // poly off, black and green on intake
-		} else if (top && bottom) { // 1100
-			polySpeed = 0; // poly off, black and green on intake
+		if (top && bottom && black && green) { 
+			polySpeed = 0; 
+			blackSpeed = 0; 
+			greenSpeed = 0; 
+		} else if (top && bottom && black) { 
+			polySpeed = 0; 
+			blackSpeed = 0; 
+		} else if (top && bottom && green) { 
+			polySpeed = 0; 
+		} else if (top && bottom) { 
+			polySpeed = 0; 
 		} else if (top && black && green) { // 1011
-			polySpeed = -0.4; // poly back
-			blackSpeed = 0; // black off
-			greenSpeed = 0; // green off
-		} else if (top && !black && green) { // 1001
-			polySpeed = -0.4; // poly back, black and green on intake
-		} else if (top && black) { // 1010
-			polySpeed = -0.4; // poly back
-			blackSpeed = 0; // black off, green on intake
-		} else if (top) { // 1000
-			polySpeed = -0.4; // poly back, black and green on intake
-		} else if (bottom) { // 01**
-			polySpeed = 0.4; // poly on, black and green on intake
-		} else { // 00**
-			polySpeed = 0; // poly off, black and green on intake
+			polySpeed = -0.4; 
+			blackSpeed = 0; 
+			greenSpeed = 0; 
+		} else if (top && !black && green) { 
+			polySpeed = -0.4; 
+		} else if (top && black) { 
+			polySpeed = -0.4; 
+			blackSpeed = 0; 
+		} else if (top) { 
+			polySpeed = -0.4; 
+		} else if (bottom) { 
+			polySpeed = 0.4; 
+		} else { 
+			polySpeed = 0;
 		}
 
 		if (m_oi.getIntakeBackFeed.get()) {
@@ -75,9 +74,9 @@ public class SetFeederPower extends CommandBase {
 			polySpeed = -0.35;
 		}
         
-		m_feeder.setFeederSpeed(polySpeed); // poly
-		m_feeder.setFeeder2Speed(blackSpeed); // black
-		m_feeder.setFeeder3Speed(greenSpeed); // green
+		m_feeder.setFeederSpeed(polySpeed); 
+		m_feeder.setFeeder2Speed(blackSpeed); 
+		m_feeder.setFeeder3Speed(greenSpeed); 
 	}
 
 	@Override

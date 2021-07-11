@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.Shooter;
 import frc.robot.OI;
-import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.MechanismConstants;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
@@ -60,7 +60,7 @@ public class Cruise extends CommandBase {
         SmartDashboard.putNumber("Shooter/Feed Count", feedCount);
 
 		if (feedCount > threshold) {
-			m_feeder.setFeederSpeed(0.5); // .45
+			m_feeder.setFeederSpeed(0.5); 
 			m_feeder.setFeeder2Speed(0.8);
 			m_feeder.setFeeder3Speed(0.35);
 		} else {
@@ -70,11 +70,9 @@ public class Cruise extends CommandBase {
 		}
 
 		if ((count > 25) && (count < 45)) {
-			m_oi.setLeftRumble(1);
-			m_oi.setRightRumble(1);
+			m_oi.setRumble(1);
 		} else {
-			m_oi.setLeftRumble(0);
-			m_oi.setRightRumble(0);
+			m_oi.setRumble(0);
 		}
 	}
 
@@ -82,12 +80,11 @@ public class Cruise extends CommandBase {
 	public void end(boolean interrupted) {
 		count = 0;
 
-		m_oi.setLeftRumble(0);
-		m_oi.setRightRumble(0);
+		m_oi.setRumble(0);
 
 		m_shooter.setRampRate(0.75);
 		m_shooter.setPIDReference(0);
-		m_shooter.setOutput(ShooterConstants.kIdlePower);
+		m_shooter.setOutput(MechanismConstants.kIdlePower);
 
         m_intake.setIntake(0);
 		m_feeder.setFeederSpeed(0);

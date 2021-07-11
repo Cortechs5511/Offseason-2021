@@ -3,25 +3,21 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.FeederConstants;
+import frc.robot.Constants.MechanismConstants;
 
 import java.util.function.Supplier;
 
 public class Feeder extends SubsystemBase {
-    private final WPI_VictorSPX feeder0 = new WPI_VictorSPX(FeederConstants.kFeeder0Port); // feeder 0 and 1 are tower
-    private final WPI_VictorSPX feeder1 = new WPI_VictorSPX(FeederConstants.kFeeder1Port);
-    private final WPI_VictorSPX feeder2 = new WPI_VictorSPX(FeederConstants.kFeeder2Port); // feeder 2, 3 are feeder wheels
-    private final WPI_VictorSPX feeder3 = new WPI_VictorSPX(FeederConstants.kFeeder3Port);
+    private final WPI_VictorSPX feeder0 = new WPI_VictorSPX(MechanismConstants.kFeeder0Port); 
+    private final WPI_VictorSPX feeder1 = new WPI_VictorSPX(MechanismConstants.kFeeder1Port);
+    private final WPI_VictorSPX feeder2 = new WPI_VictorSPX(MechanismConstants.kFeeder2Port); 
+    private final WPI_VictorSPX feeder3 = new WPI_VictorSPX(MechanismConstants.kFeeder3Port);
 
-    private final DigitalInput bottomSensor = new DigitalInput(FeederConstants.kBottomSensorPort);
-    private final DigitalInput topSensor = new DigitalInput(FeederConstants.kTopSensorPort);
-    private final DigitalInput greenSensor = new DigitalInput(FeederConstants.kGreenSensorPort);
-    private final DigitalInput blackSensor = new DigitalInput(FeederConstants.kBlackSensorPort);
-
-    // private final Encoder intakeEncoder = new Encoder(4, 5); // wrist -- inop
-    private final Encoder feedEncoder = new Encoder(6, 7); // tower -- inop
+    private final DigitalInput bottomSensor = new DigitalInput(MechanismConstants.kBottomSensorPort);
+    private final DigitalInput topSensor = new DigitalInput(MechanismConstants.kTopSensorPort);
+    private final DigitalInput greenSensor = new DigitalInput(MechanismConstants.kGreenSensorPort);
+    private final DigitalInput blackSensor = new DigitalInput(MechanismConstants.kBlackSensorPort);
 
     public Supplier<Boolean> getBottomSensor = bottomSensor::get;
     public Supplier<Boolean> getTopSensor = topSensor::get;
@@ -60,9 +56,5 @@ public class Feeder extends SubsystemBase {
 
     public void setFeeder3Speed(double input) {
         feeder3.set(input);
-    }
-
-    public void resetFeedEncoder() {
-        feedEncoder.reset();
     }
 }

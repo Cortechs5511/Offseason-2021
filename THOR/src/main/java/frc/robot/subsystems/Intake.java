@@ -6,11 +6,11 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.FeederConstants;
+import frc.robot.Constants.MechanismConstants;
 
 public class Intake extends SubsystemBase {
-    private final TalonSRX wrist = new TalonSRX(FeederConstants.kWristPort);
-    private final WPI_VictorSPX intake = new WPI_VictorSPX(FeederConstants.kIntakePort);
+    private final TalonSRX wrist = new TalonSRX(MechanismConstants.kWristPort);
+    private final WPI_VictorSPX intake = new WPI_VictorSPX(MechanismConstants.kIntakePort);
 
     public Intake() {
         wrist.configFactoryDefault();
@@ -20,7 +20,7 @@ public class Intake extends SubsystemBase {
         intake.setNeutralMode(NeutralMode.Brake);
 
         intake.setInverted(false);
-        intake.configOpenloopRamp(0.1);
+        intake.configOpenloopRamp(0.05);
     }
 
     @Override

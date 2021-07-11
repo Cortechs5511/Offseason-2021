@@ -1,6 +1,5 @@
 package frc.robot.commands.shooter;
 
-import frc.robot.OI;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Limelight;
@@ -12,7 +11,6 @@ public class AccelAlign extends CommandBase {
 	private final Drive m_drive;
 	private final Limelight m_limelight;
 	private final Shooter m_shooter;
-	private final OI m_oi = OI.getInstance();
 
 	private double input;
 	private double calculatedSpeed;
@@ -58,10 +56,6 @@ public class AccelAlign extends CommandBase {
 		} else {
 			count = 0;
 		}
-		if (count != 0) {
-			m_oi.setLeftRumble(1.0);
-			m_oi.setRightRumble(1.0);
-		}
 	}
 
 	@Override
@@ -73,15 +67,11 @@ public class AccelAlign extends CommandBase {
 		m_drive.set(0, 0);
 		m_shooter.setRampRate(0.01);
 		count = 0;
-
-		m_oi.setLeftRumble(0);
-		m_oi.setRightRumble(0);
 	}
 
 	@Override
 	public boolean isFinished() {
 		return (((Math.abs(input) < threshold) && (m_drive.getLeftVelocity.get() < 30)
 				&& (m_drive.getRightVelocity.get() < 30)) && (count > 25));
-		//return false;
 	}
 }

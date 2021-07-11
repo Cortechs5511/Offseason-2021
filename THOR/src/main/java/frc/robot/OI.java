@@ -27,14 +27,23 @@ public class OI {
     public Supplier<Boolean> getBeltBackFeed = () -> (Math.abs(controller.getRawAxis(4)) > 0.7)
             || (Math.abs(controller.getRawAxis(5)) > 0.7);
 
+    public double getClimber() {
+        int pov = controller.getPOV();
+        switch (pov) {
+            case 0:
+                return 1.0;
+            case 180:
+                return -1.0;
+            default:
+                return 0.0;
+        }
+    }
+
     private OI() {
     }
 
-    public void setLeftRumble(double input) {
+    public void setRumble(double input) {
         controller.setRumble(RumbleType.kLeftRumble, input);
-    }
-
-    public void setRightRumble(double input) {
         controller.setRumble(RumbleType.kRightRumble, input);
     }
 

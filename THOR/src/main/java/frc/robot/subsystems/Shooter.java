@@ -15,11 +15,11 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.MechanismConstants;
 
 public class Shooter extends SubsystemBase {
-    private final CANSparkMax shoot0 = createSparkMAX(ShooterConstants.kShoot0Port);
-    private final CANSparkMax shoot1 = createSparkMAX(ShooterConstants.kShoot1Port);
+    private final CANSparkMax shoot0 = createSparkMAX(MechanismConstants.kShoot0Port);
+    private final CANSparkMax shoot1 = createSparkMAX(MechanismConstants.kShoot1Port);
 
     private final CANPIDController shootPID = shoot0.getPIDController();
     public final CANEncoder shootEncoder = shoot0.getEncoder();
@@ -32,10 +32,10 @@ public class Shooter extends SubsystemBase {
         shoot1.follow(shoot0, true);
         shootPID.setOutputRange(0, 1);
 
-        shootPID.setP(ShooterConstants.kShootP);
-        shootPID.setI(ShooterConstants.kShootI);
-        shootPID.setD(ShooterConstants.kShootD);
-        shootPID.setFF(ShooterConstants.kShootFF);
+        shootPID.setP(MechanismConstants.kShootP);
+        shootPID.setI(MechanismConstants.kShootI);
+        shootPID.setD(MechanismConstants.kShootD);
+        shootPID.setFF(MechanismConstants.kShootFF);
     }
 
 
