@@ -70,7 +70,8 @@ public class RobotContainer {
         Shuffleboard.getTab("Auto").add(m_chooser);
 
         /**
-         * Speeds up the loading of the paths Enable for competition
+         * Speeds up the loading of the paths
+         * Enable for competition
          */
 
         // getAutonomousCommand(autonMode.TowerReverse);
@@ -95,16 +96,23 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
         autonMode selection = m_chooser.getSelected();
+        Command pathCommand;
         
         switch (selection) {
             case TowerReverse:
-                return new WaitCommand(1.0);
+                pathCommand = TrajectoryFollower.getPath("output/TowerReverse.wpilib.json", m_drive, true).andThen(stop());
+                break;
             case TowerForwards:
-                return new WaitCommand(1.0);
+                pathCommand = TrajectoryFollower.getPath("output/TowerForwards.wpilib.json", m_drive, true).andThen(stop());
+                break;
             case Trench:
-                return new WaitCommand(1.0);
+                pathCommand = TrajectoryFollower.getPath("output/Trench.wpilib.json", m_drive, true).andThen(stop());
+                break;
             case Generator:
-                return new WaitCommand(1.0);
+                pathCommand = TrajectoryFollower.getPath("output/Generator.wpilib.json", m_drive, true).andThen(stop());
+                break;
+            default:
+                pathCommand = new WaitCommand(1.0);
         }
         return new WaitCommand(1.0);
     }
