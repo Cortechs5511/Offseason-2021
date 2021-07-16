@@ -15,17 +15,17 @@ public class SetClimberPower extends CommandBase {
 
     @Override
     public void initialize() {
-        m_climber.setClimberSpeed(0);
+        m_climber.setClimberSpeed(0, false);
     }
 
     @Override
     public void execute() {
-        m_climber.setClimberSpeed(m_oi.getClimber());
+        m_climber.setClimberSpeed(m_oi.getClimber(), m_oi.getClimberUnwind());
     }
 
     @Override
     public void end(boolean interrupted) {
-        m_climber.setClimberSpeed(0);
+        m_climber.setClimberSpeed(0, false);
     }
 
     @Override

@@ -37,19 +37,32 @@ public class Climber extends SubsystemBase {
         }
 
         if (onTime > MechanismConstants.kClimbTime * 50) {
-            m_oi.setRumble((onTime / 20) % 2);
+            m_oi.setRumble((onTime / 10) % 2);
         } else {
             m_oi.setRumble(0);
         }
+
+        if (climb0.get() != 0) {
+            m_oi.setRumble(1);
+        }
     }
 
-    public void setClimberSpeed(double speed) {
+    public void setClimberSpeed(double speed, boolean unwind) {
         climb0.set(0);
         climb1.set(0);
-        if (speed > 0) {
-            climb0.set(speed * 0.3);
+
+        // Unwinding climber stage
+        if (unwind) {
+            climb0.set(0.3);
         } else {
-            climb0.set(speed * 0.3);
+            // Normal climb
+            // TODO: must change speed
+            if (speed > 0) {
+                climb1.set(speed * 0.3);
+            } else {
+                climb0.set(speed * 0.3);
+            }
         }
+
     }
 }

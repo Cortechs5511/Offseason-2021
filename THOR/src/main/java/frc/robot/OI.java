@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 
 public class OI {
@@ -52,5 +53,9 @@ public class OI {
             oi = new OI();
         }
         return oi;
+    }
+
+    public boolean getClimberUnwind() {
+        return (controller.getStickButton(Hand.kLeft) && controller.getStickButton(Hand.kRight));
     }
 }
