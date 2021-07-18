@@ -10,10 +10,12 @@ import frc.robot.commands.SetClimberPower;
 import frc.robot.commands.SetFeederPower;
 import frc.robot.commands.SetIntakePower;
 import frc.robot.commands.SetSpeed;
+import frc.robot.commands.TimedDrive;
 import frc.robot.commands.shooter.ShootAlign;
+import frc.robot.commands.shooter.ShootStandard;
 import frc.robot.commands.shooter.StopShooter;
 import frc.robot.commands.TrajectoryFollower;
-import frc.robot.subsystems.Climber;
+//import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
@@ -30,12 +32,13 @@ public class RobotContainer {
     private final Feeder m_feeder = new Feeder();
     private final Limelight m_limelight = new Limelight();
     private final Intake m_intake = new Intake();
-    private final Climber m_climber = new Climber();
+    //private final Climber m_climber = new Climber();
 
     private final ShootAlign m_shootAlignFast = new ShootAlign(0.5, -1, m_drive, m_shooter, m_feeder, m_limelight,
             m_intake);
     private final ShootAlign m_shootAlignSlow = new ShootAlign(0.1, 50, m_drive, m_shooter, m_feeder, m_limelight,
             m_intake);
+    private final ShootStandard m_shootStandardFast = new ShootStandard(-1, m_shooter, m_feeder, m_intake, m_limelight);
 
     private final StopShooter m_stopShooter = new StopShooter(m_shooter, m_limelight, m_feeder, m_drive);
     private final LightToggle m_lightToggle = new LightToggle(m_limelight);
@@ -47,7 +50,7 @@ public class RobotContainer {
     SendableChooser<autonMode> m_chooser = new SendableChooser<>();
 
     enum autonMode {
-        TowerReverse, TowerForwards, Trench, Generator;
+        TowerReverse, TowerForwards, Trench, Generator, TowerSimple;
     }
 
     public RobotContainer() {
@@ -56,17 +59,18 @@ public class RobotContainer {
         SetSpeed m_setSpeed = new SetSpeed(m_drive);
         SetFeederPower m_setFeederPower = new SetFeederPower(m_feeder);
         SetIntakePower m_setIntakePower = new SetIntakePower(m_intake);
-        SetClimberPower m_setClimberPower = new SetClimberPower(m_climber);
+        //SetClimberPower m_setClimberPower = new SetClimberPower(m_climber);
 
         m_drive.setDefaultCommand(m_setSpeed);
         m_feeder.setDefaultCommand(m_setFeederPower);
         m_intake.setDefaultCommand(m_setIntakePower);
-        m_climber.setDefaultCommand(m_setClimberPower);
+        //m_climber.setDefaultCommand(m_setClimberPower);
 
         m_chooser.addOption("Tower Forwards", autonMode.TowerForwards);
         m_chooser.addOption("Tower Reverse", autonMode.TowerReverse);
         m_chooser.addOption("Trench", autonMode.Trench);
         m_chooser.addOption("Generator", autonMode.Generator);
+        m_chooser.addOption("Backup: Tower Simple", autonMode.TowerSimple);
 
         Shuffleboard.getTab("Auto").add(m_chooser);
 
@@ -89,6 +93,7 @@ public class RobotContainer {
 
         new JoystickButton(controller, 4).whenPressed(m_shootAlignSlow, true);
         new JoystickButton(controller, 2).whenPressed(m_shootAlignFast, true);
+        new JoystickButton(controller, 1).whenPressed(m_shootStandardFast, true);
         new JoystickButton(controller, 3).whenPressed((new StopShooter(m_shooter, m_limelight, m_feeder, m_drive))
                 .andThen(() -> m_shooter.setOutput(MechanismConstants.kIdlePower)));
         new JoystickButton(controller, 8).whenPressed(m_stopShooter, false);
@@ -96,25 +101,6 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        autonMode selection = m_chooser.getSelected();
-        Command pathCommand;
-        
-        switch (selection) {
-            case TowerReverse:
-                pathCommand = TrajectoryFollower.getPath("output/TowerReverse.wpilib.json", m_drive, true);
-                break;
-            case TowerForwards:
-                pathCommand = TrajectoryFollower.getPath("output/TowerForwards.wpilib.json", m_drive, true);
-                break;
-            case Trench:
-                pathCommand = TrajectoryFollower.getPath("output/Trench.wpilib.json", m_drive, true);
-                break;
-            case Generator:
-                pathCommand = TrajectoryFollower.getPath("output/Generator.wpilib.json", m_drive, true);
-                break;
-            default:
-                pathCommand = new WaitCommand(1.0);
-        }
-        return m_shootAlignSlow.andThen(pathCommand);
+        return m_shootStandardFast.andThen(new TimedDrive(m_drive, 1, 0.4));
     }
 }

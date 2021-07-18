@@ -22,13 +22,13 @@ public class Drive extends SubsystemBase {
     public final static double MAX_ALLOWED_VOLTS = 9.0;
 
     private final CANSparkMax left0 = createSparkMAX(DriveConstants.kLeftMotor0Port, false);
-    private final CANSparkMax right0 = createSparkMAX(DriveConstants.kRightMotor0Port, true);
+    //private final CANSparkMax right0 = createSparkMAX(DriveConstants.kRightMotor0Port, true);
 
     private final CANSparkMax left1 = createSparkMAX(DriveConstants.kLeftMotor1Port, false);
     private final CANSparkMax right1 = createSparkMAX(DriveConstants.kRightMotor1Port, true);
 
     private final CANEncoder leftEnc = left0.getEncoder();
-    private final CANEncoder rightEnc = right0.getEncoder();
+    private final CANEncoder rightEnc = right1.getEncoder();
 
     private final AHRS navx = new AHRS();
     private final DifferentialDriveOdometry m_odometry;
@@ -41,15 +41,15 @@ public class Drive extends SubsystemBase {
     public PIDController anglePID = new PIDController(DriveConstants.kAngleP, DriveConstants.kAngleI, DriveConstants.kAngleD);
 
     public Supplier<Double> getLeftOutput = left0::get;
-    public Supplier<Double> getRightOutput = right0::get;
+    public Supplier<Double> getRightOutput = right1::get;
     public Supplier<Double> getLeftVelocity = leftEnc::getVelocity;
     public Supplier<Double> getRightVelocity = rightEnc::getVelocity;
     public Supplier<Double> getGyroAngle = navx::getAngle;
 
 
     public Drive() {
-        left1.follow(left0);
-        right1.follow(right0);
+        //left1.follow(left0);
+        //right1.follow(right0);
 
         leftEnc.setPositionConversionFactor(DriveConstants.kEncoderDistancePerPulse);
         rightEnc.setPositionConversionFactor(DriveConstants.kEncoderDistancePerPulse);
@@ -73,7 +73,7 @@ public class Drive extends SubsystemBase {
         controller.enableVoltageCompensation(MAX_ALLOWED_VOLTS);
         controller.setOpenLoopRampRate(0.1);
         controller.setClosedLoopRampRate(0.1);
-        controller.setSmartCurrentLimit(60, 60, 9000);
+        controller.setSmartCurrentLimit(76, 76, 9000);
 
         return controller;
     }
@@ -81,7 +81,9 @@ public class Drive extends SubsystemBase {
 
     public void set(double left, double right) {
         left0.set(left);
-        right0.set(right);
+        left1.set(left);
+        //right0.set(right);
+        right1.set(right);
     }
 
     public void flip() {
@@ -98,7 +100,9 @@ public class Drive extends SubsystemBase {
     
     public void setOutput(double leftVolts, double rightVolts) {
         left0.set(rightVolts / MAX_ALLOWED_VOLTS);
-        right0.set(leftVolts / MAX_ALLOWED_VOLTS);
+        left1.set(rightVolts / MAX_ALLOWED_VOLTS);
+        //right0.set(leftVolts / MAX_ALLOWED_VOLTS);
+        right1.set(leftVolts / MAX_ALLOWED_VOLTS);
     }
 
     public void resetOdometry(Pose2d pose) {
@@ -131,7 +135,7 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putNumber("Drive/Right Position", rightPosition);
 
         SmartDashboard.putNumber("Drive/Left Power", left0.getAppliedOutput());
-        SmartDashboard.putNumber("Drive/Right Power", right0.getAppliedOutput());
+        SmartDashboard.putNumber("Drive/Right Power", right1.getAppliedOutput());
 
         SmartDashboard.putNumber("NavX Angle", navx.getAngle());
 

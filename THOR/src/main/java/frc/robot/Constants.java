@@ -63,8 +63,8 @@ public final class Constants {
         public static final double kShootFF = 0.000199;
         public static final double kIdlePower = 0.25;
 
-        public static final int kClimb0Port = 60;
-        public static final int kClimb1Port = 61;
+        //public static final int kClimb0Port = 60;
+        //public static final int kClimb1Port = 61;
 
         public static final double kClimbTime = 20.0;
     }
