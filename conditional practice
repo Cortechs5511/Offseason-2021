@@ -1,0 +1,24 @@
+class Main {
+   
+    public static void main(String[] args) {
+       //strings
+   int finalgrade=54;
+   int A=90;
+   int B=80;
+   int C=70;
+   int D=60;
+   int F=50;
+   
+   //conditionals
+   if(finalgrade==A){
+       System.out.println("Good Job!");
+   }else if(finalgrade<C);{
+       System.out.println("you failed");
+   }
+    
+   }
+   //Booleans
+   }
+       
+       
+      
