@@ -84,6 +84,33 @@ class Main {
 
 
 
+         // Day 2 of Programming Training; Loops and Arrays
+        /*int i=0;
+        while (i < 5) {
+            System.out.println(i);
+            i++; 
+        } */
+        String[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
+
+        for (int i = 0; i < cars.length; i++) {
+            System.out.print(cars[i]);
+        }
+        for (String car: cars) {
+            System.out.print(car);
+        }
+
+        // With for loops, it's "For (initial Value; Condition; how to change original value)"
+
+        String[] someOtherLetters = {"A", "B", "C", "D", "E", "F"};
+
+        for (int z = 0; someOtherLetters.length > z; z++) {
+            System.out.println(someOtherLetters);
+        }
+
+
+
+
+
 
 
 
